@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root{
+    --body-bg: rgba(20, 20, 20, 1);
+    --body-color: rgba(230, 230, 230, 1);
+    --menu-bg: rgba(250, 100, 100, 1);
+    --success: rgba(100, 220, 100, 1);
+    --danger: rgba(220, 100, 100, 1);
+    --btn-hover: rgba(20, 20, 20, 1);
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans";
+}
+
+.page-content{
+    scroll-behavior: smooth;
+}
+
+section[id]{
+    scroll-snap-align: start;
+    scroll-margin-top: 2rem;
+}
+
+body{
+    height: 100vh;
+    display: grid;
+    grid-template: auto 1fr auto / 1fr;
+    background-color: var(--body-bg);
+    color: var(--body-color);
+    font-size: 16pt;
+}
+
+
+
+.menu-container{
+    grid-area: 1/1/2/2;
+    width: 100%;
+    background-color: var(--menu-bg);
+    padding: 10px;
+    display: flex;
+    justify-content: end;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+.menu-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+}
+
+.menu-item{
+    min-width: fit-content;
+    margin: 0 10px;
+}
+
+.menu-item a, .mail{
+    width: fit-content !important;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--body-color);
+    position: relative;
+}
+
+.menu-item a::after, .mail::after{
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    transform-origin: center;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+    border-radius: 100vmin;
+    transform: scaleX(0);
+    transition-duration: 250ms;
+}
+
+.menu-item a:hover::after, .mail:hover::after{
+    background-color: var(--body-color);
+    transform: scaleX(1);
+}
+
+.page-content{
+    grid-area: 2/1/3/2;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+section{
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+section h1{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+section h2{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.6rem;
+}
+
+section h3{
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.5rem;
+}
+
+section p{
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+form{
+    padding: 30px 10px;
+    border: 1px solid var(--body-color);
+}
+
+.address-wrapper p{
+    display: flex;
+    justify-content: center;
+}
+
+.address-wrapper p input{
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: var(--body-color);
+    padding: 0 5px;
+    max-width: 4rem;
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--body-color);
+    text-align: center;
+    transition-duration: 250ms;
+}
+
+.octb{
+    max-width: 6rem !important;
+}
+
+.address-wrapper p input:hover{
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.address-wrapper p span{
+    margin: 0 2px;
+}
+
+.btn-wrapper{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.btn-wrapper input{
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    transition-duration: 250ms;
+    cursor: pointer;
+}
+
+.send-data{
+    border: 2px solid var(--success) !important;
+    color: var(--success);
+}
+
+.send-data:hover{
+    background-color: var(--success);
+    color: var(--btn-hover);
+    box-shadow: 0px 0px 10px var(--success);
+}
+
+.clear-field{
+    border: 2px solid var(--danger) !important;
+    color: var(--danger);
+}
+
+.clear-field:hover{
+    background-color: var(--danger);
+    color: var(--btn-hover);
+    box-shadow: 0px 0px 10px var(--danger);
+}
+
+#bdata, #ddata{
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+#contact{
+    grid-area: 3/1/4/2;
+    background-color: var(--menu-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-msg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 1rem;
+}
+
+.contact-msg a{
+    font-size: 1.3rem;
+}
+
+.copyright{
+    padding: 0.5rem;
+    text-align: center;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
+    appearance: none;
+}
+
+/*form field sizes, mobile support etc.*/
+@media screen and (max-width: 500px)
+{
+
+    .address-wrapper p input{
+        max-width: 3rem;
+    }
+
+    .octb{
+        max-width: 5rem !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+}
+
+
+/*going easy on the eyes, no need to look through the whole width of a monitor :3*/
+@media screen and (min-width: 1250px) {
+    section{
+        margin: 2rem 20rem;
+    }
+}
+
+@media screen and (min-width: 1800px) {
+    section{
+        margin: 2rem 30rem;
+    }
+}
+
+@media screen and (min-width: 2140px) {
+    section{
+        margin: 2rem 50rem;
+    }
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online IPv4 converter</title>
+    <link rel="stylesheet" href="./STYLES/style.css">
+    <script src="./JS/conversion.js" defer></script>
+</head>
+
+<body>
+    <header class="menu-container">
+        <ul class="menu-list">
+            <li class="menu-item"><a href="#intro">About</a></li>
+            <li class="menu-item"><a href="#decbin">DEC - BIN conversion</a></li>
+            <li class="menu-item"><a href="#bindec">BIN - DEC conversion</a></li>
+            <li class="menu-item"><a href="#contact">Contact</a></li>
+        </ul>
+    </header>
+    <div class="page-content">
+        <section id="intro">
+            <h1>
+                IPv4 conversion (binary and decimal)
+            </h1>
+            <p>
+                Internet Protocol version 4 (IPv4) is used to route Internet traffic. This website gives you the
+                opportunity
+                to convert it to the binary version of it and vice versa.
+            </p>
+        </section>
+        <section id="decbin">
+            <h2>Decimal to Binary IPv4 conversion</h2>
+            <form action="" method="get">
+                <div class="address-wrapper">
+                    <p>
+                        <input type="number" name="dec1" id="dec1" class="octd" min="0" max="255"
+                            maxlength="3"><span>.</span>
+                        <input type="number" name="dec2" id="dec2" class="octd" min="0" max="255"
+                            maxlength="3"><span>.</span>
+                        <input type="number" name="dec3" id="dec3" class="octd" min="0" max="255"
+                            maxlength="3"><span>.</span>
+                        <input type="number" name="dec4" id="dec4" class="octd" min="0" max="255" maxlength="3">
+                    </p>
+                </div>
+                <div class="btn-wrapper">
+                    <input type="submit" value="Convert" class="send-data" id="dectobin">
+                    <input type="reset" value="Clear" class="clear-field" id="bclear">
+                </div>
+            </form>
+            <div class="result-data">
+                <h3>The binary IPv4 address:</h3>
+                <p id="bdata"></p>
+            </div>
+        </section>
+        <section id="bindec">
+            <h2>Binary to Decimal IPv4 conversion</h2>
+            <form action="" method="get">
+                <div class="address-wrapper">
+                    <p>
+                        <input type="number" name="bin1" id="bin1" class="octb" pattern="[0-1]{8}"
+                            maxlength="8"><span>.</span>
+                        <input type="number" name="bin2" id="bin2" class="octb" pattern="[0-1]{8}"
+                            maxlength="8"><span>.</span>
+                        <input type="number" name="bin3" id="bin3" class="octb" pattern="[0-1]{8}"
+                            maxlength="8"><span>.</span>
+                        <input type="number" name="bin4" id="bin4" class="octb" pattern="[0-1]{8}" maxlength="8">
+                    </p>
+                </div>
+                <div class="btn-wrapper">
+                    <input type="submit" value="Convert" class="send-data" id="bintodec">
+                    <input type="reset" value="Clear" class="clear-field" id="dclear">
+                </div>
+            </form>
+            <div class="result-data">
+                <h3>The binary IPv4 address:</h3>
+                <p id="ddata"></p>
+            </div>
+        </section>
+    </div>
+    <footer id="contact">
+        <section class="contact-msg">
+            <p>If you notice a bug or have some update ideas, let me know here!</p>
+            <a href="mailto:pawel.nowak.biznes1@gmail.com" class="mail">E-mail :3</a>
+        </section>
+        <p class="copyright">
+            &copy; NOWY 2024
+        </p>
+    </footer>
+
+    <script>
+
+        let decToBinBtn = document.querySelector("#dectobin");
+        let binToDecBtn = document.querySelector("#bintodec");
+        let outputBin = document.querySelector("#bdata");
+        let outputDec = document.querySelector("#ddata");
+
+
+        //setting default answers
+        window.onload = () => {
+            outputBin.innerHTML = "Enter some data first ^^";
+            outputDec.innerHTML = "Enter some data first ^^";
+        };
+
+        //clear buttons
+        document.querySelector("#bclear").addEventListener("click", () => {
+            outputBin.innerHTML = "Enter some data first ^^";
+        });
+
+        document.querySelector("#dclear").addEventListener("click", () => {
+            outputDec.innerHTML = "Enter some data first ^^";
+        });
+
+        //decimal to binary conversion
+        decToBinBtn.addEventListener("click", () => {
+            //prevents page reloading
+            event.preventDefault();
+
+            //value assigning
+            let fields = document.querySelectorAll(".octd");
+            let values = [];
+            for (let i = 0; i < fields.length; i++) {
+                values.push(parseInt(fields[i].value))
+            }
+
+            //data validation - only numbers between 0 and 255
+            let validData = true;
+            values.forEach(number => {
+                if (isNaN(number)) {
+                    validData = false;
+                    return;
+                }
+
+                if (number < 0 || number > 255) {
+                    validData = false;
+                    return;
+                }
+            });
+
+            if (!validData) {
+                outputBin.innerHTML = "Please enter correct data :{";
+                return;
+            }
+
+            translateIP(values, true, outputBin);
+            return;
+        });
+
+        //binary to decimal conversion
+        binToDecBtn.addEventListener("click", () => {
+            //prevents page reloading
+            event.preventDefault();
+
+            //value assigning
+            let fields = document.querySelectorAll(".octb");
+            let values = [];
+            for (let i = 0; i < fields.length; i++) {
+                values.push(fields[i].value);
+            }
+
+            //data validation - 8 numbers between 0 and 1
+            let validData = true;
+            let binRegex = /$[0-1]{8}^/;
+            values.forEach(binary => {
+                if (binRegex.test(binary)) {
+                    validData = false;
+                    return;
+                }
+            });
+
+            if (!validData) {
+                outputDec.innerHTML = "Please enter correct data :{";
+                return;
+            }
+
+            translateIP(values, false, outputDec);
+            return;
+        });
+
+    </script>
+</body>
+
+</html>
