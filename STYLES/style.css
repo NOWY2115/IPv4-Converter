@@ -238,6 +238,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
 /*form field sizes, mobile support etc.*/
 @media screen and (max-width: 500px)
 {
+    body{
+        font-size: 12pt;
+    }
 
     .address-wrapper p input{
         max-width: 3rem;
@@ -248,11 +251,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
         font-size: 0.9rem !important;
     }
 }
-
-@media screen and (max-width: 600px) {
-
-}
-
 
 /*going easy on the eyes, no need to look through the whole width of a monitor :3*/
 @media screen and (min-width: 1250px) {
