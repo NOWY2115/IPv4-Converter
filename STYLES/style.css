@@ -141,6 +141,7 @@ form{
     background-color: transparent;
     color: var(--body-color);
     padding: 0 5px;
+    min-width: 3rem;
     max-width: 4rem;
     font-size: 1.1rem;
     border-bottom: 2px solid var(--body-color);
@@ -200,7 +201,7 @@ form{
     box-shadow: 0px 0px 10px var(--danger);
 }
 
-#bdata, #ddata{
+#bdata, #ddata, #odata, #dodata{
     text-align: center;
     font-size: 1.2rem;
     letter-spacing: 2px;
@@ -255,7 +256,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
 /*going easy on the eyes, no need to look through the whole width of a monitor :3*/
 @media screen and (min-width: 1250px) {
     section{
-        margin: 2rem 20rem;
+        margin: 2rem 2rem;
     }
 }
 
