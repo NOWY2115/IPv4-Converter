@@ -15,7 +15,8 @@
             <li class="menu-item"><a href="#intro">About</a></li>
             <li class="menu-item"><a href="#decbin">DEC - BIN conversion</a></li>
             <li class="menu-item"><a href="#bindec">BIN - DEC conversion</a></li>
-            <li class="menu-item"><a href="#contact">Contact</a></li>
+            <li class="menu-item"><a href="#decoct">DEC - OCT conversion</a></li>
+            <li class="menu-item"><a href="#octdec">OCT - DEC conversion</a></li>
         </ul>
     </header>
     <div class="page-content">
@@ -77,6 +78,54 @@
                 <p id="ddata"></p>
             </div>
         </section>
+        <section id="decoct">
+            <h2>Decimal to Octal IPv4 conversion</h2>
+            <form action="" method="get">
+                <div class="address-wrapper">
+                    <p>
+                        <input type="number" name="dec5" id="dec5" class="octd1" min="0" max="255"
+                            maxlength="3"><span>.</span>
+                        <input type="number" name="dec6" id="dec6" class="octd1" min="0" max="255"
+                            maxlength="3"><span>.</span>
+                        <input type="number" name="dec7" id="dec7" class="octd1" min="0" max="255"
+                            maxlength="3"><span>.</span>
+                        <input type="number" name="dec8" id="dec8" class="octd1" min="0" max="255" maxlength="3">
+                    </p>
+                </div>
+                <div class="btn-wrapper">
+                    <input type="submit" value="Convert" class="send-data" id="dectooct">
+                    <input type="reset" value="Clear" class="clear-field" id="oclear">
+                </div>
+            </form>
+            <div class="result-data">
+                <h3>The octal IPv4 address:</h3>
+                <p id="odata"></p>
+            </div>
+        </section>
+        <section id="octdec">
+            <h2>Octal to Decimal IPv4 conversion</h2>
+            <form action="" method="get">
+                <div class="address-wrapper">
+                    <p>
+                        <input type="number" name="oct1" id="oct1" class="octo" min="0" max="7" maxlength="3"><span>.</span>
+                        <input type="number" name="oct2" id="oct2" class="octo" min="0" max="7" maxlength="3"><span>.</span>
+                        <input type="number" name="oct3" id="oct3" class="octo" min="0" max="7" maxlength="3"><span>.</span>
+                        <input type="number" name="oct4" id="oct4" class="octo" min="0" max="7" maxlength="3">
+                    </p>
+                </div>
+                <div class="btn-wrapper">
+                    <input type="submit" value="Convert" class="send-data" id="octtodec">
+                    <input type="reset"
+                        value="Clear" class="clear-field" id="doclear">
+
+                </div>
+                
+            </form>
+            <div class="result-data">
+                <h3>The decimal IPv4 address:</h3>
+                <p id="dodata"></p>
+            </div>
+        </section>
     </div>
     <footer id="contact">
         <section class="contact-msg">
@@ -92,14 +141,20 @@
 
         let decToBinBtn = document.querySelector("#dectobin");
         let binToDecBtn = document.querySelector("#bintodec");
+        let decToOctBtn = document.querySelector("#dectooct");
+        let octToDecBtn = document.querySelector("#octtodec");
         let outputBin = document.querySelector("#bdata");
         let outputDec = document.querySelector("#ddata");
+        let outputOct = document.querySelector("#odata");
+        let outputDecOct = document.querySelector("#dodata");
 
 
         //setting default answers
         window.onload = () => {
             outputBin.innerHTML = "Enter some data first ^^";
             outputDec.innerHTML = "Enter some data first ^^";
+            outputOct.innerHTML = "Enter some data first ^^";
+            outputDecOct.innerHTML = "Enter some data first ^^";
         };
 
         //clear buttons
@@ -110,6 +165,14 @@
         document.querySelector("#dclear").addEventListener("click", () => {
             outputDec.innerHTML = "Enter some data first ^^";
         });
+
+        document.querySelector("#oclear").addEventListener("click", () => {
+            outputOct.innerHTML = "Enter some data first ^^";
+        })
+
+        document.querySelector("#doclear").addEventListener("click", () => {
+            outputDecOct.innerHTML = "Enter some data first ^^";
+        })
 
         //decimal to binary conversion
         decToBinBtn.addEventListener("click", () => {
@@ -142,7 +205,7 @@
                 return;
             }
 
-            translateIP(values, true, outputBin);
+            translateIP(values, "bin", outputBin);
             return;
         });
 
@@ -160,9 +223,9 @@
 
             //data validation - 8 numbers between 0 and 1
             let validData = true;
-            let binRegex = /$[0-1]{8}^/;
+            let binRegex = /^[0-1]{8}$/;
             values.forEach(binary => {
-                if (binRegex.test(binary)) {
+                if (!binRegex.test(binary)) {
                     validData = false;
                     return;
                 }
@@ -173,9 +236,74 @@
                 return;
             }
 
-            translateIP(values, false, outputDec);
+            translateIP(values, "dec", outputDec);
             return;
         });
+
+        decToOctBtn.addEventListener("click", () => {
+            //prevents page reloading
+            event.preventDefault();
+
+            //value assigning
+            let fields = document.querySelectorAll(".octd1");
+            let values = [];
+            for (let i = 0; i < fields.length; i++) {
+                values.push(fields[i].value);
+            }
+
+            //data validation - only numbers between 0 and 255
+            let validData = true;
+            values.forEach(number => {
+                if (isNaN(number)) {
+                    validData = false;
+                    return;
+                }
+
+                if (number < 0 || number > 255) {
+                    validData = false;
+                    return;
+                }
+            });
+
+            if (!validData) {
+                outputOct.innerHTML = "Please enter correct data :{";
+                return;
+            }
+
+            translateIP(values, "oct", outputOct);
+            return;
+
+        })
+
+        octToDecBtn.addEventListener("click", () => {
+            //prevents page reloading
+            event.preventDefault();
+
+            //value assigning
+            let fields = document.querySelectorAll(".octo");
+            let values = [];
+            for (let i = 0; i < fields.length; i++) {
+                values.push(fields[i].value);
+            }
+
+            //data validation - only numbers between 0 and 7
+            let validData = true;
+            let octRegex = /^[0-7]{3}$/;
+            values.forEach(octal => {
+                if (!octRegex.test(octal)) {
+                    validData = false;
+                    return;
+                }
+            });
+
+            if (!validData) {
+                outputDecOct.innerHTML = "Please enter correct data :{";
+                return;
+            }
+
+            translateIP(values, "octDec", outputDecOct);
+            return;
+        })
 
     </script>
 </body>
